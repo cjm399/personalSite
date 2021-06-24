@@ -1,0 +1,91 @@
+.h-center
+{
+    margin : 3em auto;
+    width : min(37em, 100%);
+}
+.h-center-l
+{
+    margin : 3em auto;
+    width : min(50em, 100%);
+}
+.rectangle
+{
+    display : inline-block;
+    width : min(10em, 31%);
+    height : 4em;
+    background-color : #272727;
+    text-align : center;
+    margin : 0 min(1em, 1%);
+    border : solid;
+    border-width : .2em;
+    border-color : grey;
+}
+.white
+{
+    color : white;
+}
+.spaced-h
+{
+    margin : 0 min(1%, 1em)
+}
+.spaced-v
+{
+    margin : 1em 0;
+}
+.spaced
+{
+    margin : 1em 1em;
+}
+p
+{
+    font-family:georgia,garamond,serif;
+    color : #42425A;
+    font-size : 1.1em;
+    line-height : 1.5em;
+    letter-spacing: .02em;
+}
+.title
+{
+    font-size : 5em;
+    font-family : Verdana,sans-serif;
+}
+.header
+{
+    font-family : sans-serif;
+    color : #666666;
+}
+.none-link
+{
+    text-decoration: none;
+    font-weight : bold;
+}
+a:visited
+{
+    color : inherit;
+}
+a:hover
+{
+    color : #A8A8A8;
+}
+.social
+{
+    width : min(3.5em, 100%/6);
+    height : min(3.5em, 100%/6);
+    margin : 0 min(2%, 1em);
+}
+hr
+{
+    height : .01em;
+    color : #FFFFFF
+}
+.img-desc-left
+{
+    width:30em;
+    height:16em;
+    display : inline-block;
+}
+.txt-desc
+{
+    vertical-align:top;
+    display : inline-block;
+}
