@@ -1,12 +1,12 @@
 .h-center
 {
     margin : 3em auto;
-    width : min(37em, 100%);
+    width : min(37em, 95%);
 }
 .h-center-l
 {
     margin : 3em auto;
-    width : min(50em, 100%);
+    width : min(50em, 95%);
 }
 .rectangle
 {
@@ -36,6 +36,14 @@
 {
     margin : 1em 1em;
 }
+li
+{
+    font-family:georgia,garamond,serif;
+    color : #42425A;
+    font-size : 1.1em;
+    line-height : 1.5em;
+    letter-spacing: .02em;
+}
 p
 {
     font-family:georgia,garamond,serif;
@@ -43,6 +51,12 @@ p
     font-size : 1.1em;
     line-height : 1.5em;
     letter-spacing: .02em;
+}
+iframe
+{
+    margin : 0 auto;
+    display : block;
+    border-style : none;
 }
 .title
 {
@@ -78,14 +92,29 @@ hr
     height : .01em;
     color : #FFFFFF
 }
+.game-wrapper
+{
+    margin : 3em auto;
+    width : min(75em, 95%);
+}
+.game-desc
+{
+    display : flex;
+}
 .img-desc-left
 {
-    width:30em;
-    height:16em;
-    display : inline-block;
+    width:min(35em, 100%);
+    height:min(20em, 100%);
 }
 .txt-desc
 {
     vertical-align:top;
-    display : inline-block;
+    justify-content :left;
+    margin:0 1em;
+    width:min(35em, 100%)
+}
+
+.debug-draw
+{
+    border:1px solid black;
 }
