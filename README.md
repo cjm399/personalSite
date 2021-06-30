@@ -1,0 +1,2 @@
+# personalSite
+The HTML, CSS, and JavaScript for my main site. Currently, it is pretty lacking in complexity, I would like it to ideally be much more of a dynamic site, able to pull down blog posts, and sort through them with a database and tags. Also adding in user comments, etc. This will most likely move to something like React, but for now, I thought it would be best (and easiest) to start with a simple, static page using only basic css, html, and minimal javascript.
