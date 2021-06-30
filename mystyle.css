@@ -8,6 +8,12 @@
     margin : 3em auto;
     width : min(50em, 95%);
 }
+
+.post-body
+{
+    margin : 3em auto;
+    width : min(50em, 95%);
+}
 .rectangle
 {
     display : inline-block;
@@ -52,6 +58,11 @@ p
     line-height : 1.5em;
     letter-spacing: .02em;
 }
+h2 
+{
+    font-family:georgia,garamond,serif;
+    color : #1c1c24;
+}
 iframe
 {
     margin : 0 auto;
@@ -61,25 +72,37 @@ iframe
 .title
 {
     font-size : 5em;
+    color : #000000;
     font-family : Verdana,sans-serif;
 }
 .header
 {
     font-family : sans-serif;
     color : #666666;
+    font-size : .99em;
 }
 .none-link
 {
     text-decoration: none;
     font-weight : bold;
 }
+a:link
+{
+    text-decoration: none;
+}
 a:visited
 {
     color : inherit;
+    text-decoration: none;
 }
 a:hover
 {
     color : #A8A8A8;
+    text-decoration: none;
+}
+a:active
+{
+   text-decoration: none;
 }
 .social
 {
@@ -106,6 +129,18 @@ hr
     width:min(35em, 100%);
     height:min(20em, 100%);
 }
+.img-desc-right
+{
+    width:min(35em, 100%);
+    height:min(20em, 100%);
+}
+.txt-desc-wrapper
+{
+    vertical-align:top;
+    justify-content :left;
+    margin:0 1em;
+    width:min(35em, 100%)
+}
 .txt-desc
 {
     vertical-align:top;
@@ -117,4 +152,34 @@ hr
 .debug-draw
 {
     border:1px solid black;
+}
+.content
+{
+    width : 100%;
+    height : 100%;
+}
+.auto-resizable-iframe {
+    max-width: 768px;
+    margin: 0px auto;
+  }
+  
+  .auto-resizable-iframe > div {
+    position: relative;
+    padding-bottom: 57%;
+    height: 0px;
+  }
+  
+  .auto-resizable-iframe iframe {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+  }
+.full-size
+{
+    margin: 0 auto;
+    display:block;
+    text-align: center;
+    width: min( 75em, 95%)
 }

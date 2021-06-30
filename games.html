@@ -3,22 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Chris McCole</title>
-        <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-        <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+        <title>Games By Chris McCole</title>
         <link rel="stylesheet" type="text/css" href="mystyle.css">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     </head>
     <body>
         <!---If this was in react, I could have a header component that I just place at the top of the page?-->
         <a href="./index.html" class="none-link"><h1 class="title" align="center">CHRIS MCCOLE</h1></a>
         <div align="center" class="header">
-            <a href="./blog.html" class="spaced-h none-link">BLOG</a> 
-            <a href="./index.html" class="spaced-h none-link">ABOUT</a> 
-            <a href="./games.html" class="spaced-h none-link">GAMES</a> 
-            <a href="./projects.html" class="spaced-h none-link">PROJECTS</a> 
-            <a href="./3d-anim.html" class="spaced-h none-link">3D ANIMATION</a>
+            <a href="./blog.html" class="spaced-h header none-link">BLOG</a> 
+            <a href="./index.html" class="spaced-h header none-link">ABOUT</a> 
+            <a href="./games.html" class="spaced-h header none-link">GAMES</a> 
+            <a href="./projects.html" class="spaced-h header none-link">PROJECTS</a> 
+            <a href="./3d-anim.html" class="spaced-h header none-link">3D ANIMATION</a>
         </div>
 
 
@@ -54,11 +51,41 @@
         <h2 align="center" id="commercial"> Commercial </h2>
         <hr><br>
 
+        <script>
+                window.addEventListener("resize", reformat);
+                window.addEventListener('load', reformat);
+                function reformat()
+                {
+                    var elements = document.getElementsByClassName("game-desc");
+                    isLarge = window.innerWidth > 960;
+                    for(i = 0; i < elements.length; ++i)
+                    {
+                        
+                        if(isLarge)
+                        {
+                            elements.item(i).style.display = "flex";
+                            jQuery('.txt-desc-wrapper').each(function()
+                            {
+                                $(this).insertBefore($(this).prev('.img-desc-right'));
+                            });
+                        }
+                        else 
+                        {
+                            elements.item(i).style.display = "block";
+                            jQuery('.img-desc-right').each(function()
+                            {
+                                $(this).insertBefore($(this).prev('.txt-desc-wrapper'));
+                            });
+                        }
+                    }
+                }
+        </script>
+
         <!--Sole-->
         <div class="game-wrapper" id="sole">
-            <div class="game-desc">
-                <img class="img-desc-left"src="images/Sole_KeyArt.jpg"/>
-                <div class="txt-desc">
+            <div class="game-desc" id="game-desc">
+                <img class="img-desc-left" src="images/Sole_KeyArt.jpg"/>
+                <div class="txt-desc-wrapper">
                     <h1 class="txt-desc" style="margin:.25em .5em">Sole - 2019</h1>
                     <h3 class="txt-desc">IGF 2019 “Best Student Game” Finalist</h3>
                     <br><p class="txt-desc">Sole is an artistic exploration game where you paint the world with light.</p> 
@@ -76,13 +103,13 @@
         <!--Code Tycoon-->
         <div class="game-wrapper" id="code-tycoon">
             <div class="game-desc">
-                <div class="txt-desc">
+                <div class="txt-desc-wrapper">
                     <h1 class="txt-desc" style="margin:.25em .5em">Code Tycoon - 2021</h1>
                     <p class="txt-desc">Built for Okta, Code Tycoon is a WebGL game built in Unity where you are a programmer at a failing company.</p> 
                     <br>
                     <p class="txt-desc">I worked on a majority of the online functionality, integrated PlayFab, implemented Cloud Saving, utilized Okta for user authentication. I also worked on many of the game play systems, mini-games, character creator, movement, and animation systems.</p>
                 </div>
-                <img class="img-desc-left"src="images/CodeTycoon.png"/>
+                <img class="img-desc-right"src="images/CodeTycoon.png"/>
             </div>
         </div>
 
@@ -109,12 +136,12 @@
         <!--Cryptid Hunter-->
         <div class="game-wrapper" id="cryptid-hunter">
             <div class="game-desc">
-                <div class="txt-desc">
+                <div class="txt-desc-wrapper">
                     <h1 class="txt-desc" style="margin:.25em .5em">Cryptid Hunter - 2019</h1>
                     <br><p class="txt-desc">Cryptids, also known as folk lore creatures, are real, and you try to prove it by finding them and taking their pictures. You are dropped into a camp, with a camera, and are tasked with finding the Fresno Night Walker. Once found, get a good enough picture of the cryptid to prove that Night Walker’s exist, and return to camp.</p> 
                     <br><p class="txt-desc">This first person photography game, was created by a team of 7 students across an 8 week development period.</p>
                 </div>
-                <img class="img-desc-left"src="images/CryptidHunter.png"/>
+                <img class="img-desc-right"src="images/CryptidHunter.png"/>
             </div>
         </div>
         <br>
@@ -141,11 +168,11 @@
         <!--Artists Dream-->
         <div class="game-wrapper" id="artist-dream">
             <div class="game-desc">
-                <div class="txt-desc">
+                <div class="txt-desc-wrapper">
                     <h1 class="txt-desc" style="margin:.25em .5em">An Artist’s Dream - 2018</h1>
                     <br><p class="txt-desc">An Artist’s Dream is an experimental hybrid art project made within 1 week. It is playable for free on itch.io in browser. The art was created by Kelly and the rest was created by myself.</p> 
                 </div>
-                <img class="img-desc-left"src="images/ArtistsDream.png"/>
+                <img class="img-desc-right"src="images/ArtistsDream.png"/>
             </div>
         </div><br>
 
@@ -164,11 +191,11 @@
         <!--Space Hat-->
         <div class="game-wrapper" id="space-hat">
             <div class="game-desc">
-                <div class="txt-desc">
+                <div class="txt-desc-wrapper">
                     <h1 class="txt-desc" style="margin:.25em .5em">Space Hat - 2018</h1>
                     <br><p class="txt-desc">An infinite game I made in a couple hours for a game jam. You use the arrow sticks to fly the hat around, it rotates with physics as you fly towards some cool stars with a trail particle effect.</p>
                 </div>
-                <img class="img-desc-left"src="images/spacehat.PNG"/>
+                <img class="img-desc-right"src="images/spacehat.PNG"/>
             </div>
         </div><br>
 

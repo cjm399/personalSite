@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Chris McCole - Game Dev</title>
+        <link rel="stylesheet" type="text/css" href="../mystyle.css">
+    </head>
+    <body>
+        <!---If this was in react, I could have a header component that I just place at the top of the page?-->
+        <a href="../index.html" class="none-link"><h1 class="title title" align="center">CHRIS MCCOLE</h1></a>
+        <div align="center" class="header">
+            <a href="../blog.html" class="spaced-h header none-link">BLOG</a> 
+            <a href="../index.html" class="spaced-h header none-link">ABOUT</a> 
+            <a href="../games.html" class="spaced-h header none-link">GAMES</a> 
+            <a href="../projects.html" class="spaced-h header none-link">PROJECTS</a> 
+            <a href="../3d-anim.html" class="spaced-h header none-link">3D ANIMATION</a>
+        </div>
+        
+        <div style="margin:5em 0;align-text:center;">
+            <div class="auto-resizable-iframe">
+                <div>
+                    <iframe src="https://www.youtube.com/embed/Q6nWeXDJ14I" 
+                    title="Resilience Debut Trailer" frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                    </iframe>
+                </div>
+                <p align="middle">Debut Trailer for Resilience the Sci-Fi City Builder.</p>
+            </div>
+        </div>
+
+        <div class="post-body">
+            <h1 align="middle">Refactoring The Refugees and AI in Resilience</h1>
+            <h3 align="middle">June 23, 2021</h3>
+
+            <p>While working on the sci-fi, civically driven, city builder Resilience, we ran into many technical 
+            challenges that are typical when developing any city builder. However, Resilience was unique in that we 
+            weren’t simulating the buildings and city planning, as much as we were simulating each resident Murian 
+            in the community. On top of this, we developed the game to be played secondarily in the top-down view typical 
+            of a city builder, and primarily as a first person experience. The team made this design decision to give the 
+            player the experience of navigating the camp along with the refugees, as well as to ground the player 
+            in reality and treat them at the same level as any of the other inhabitants. The ultimate goal in making 
+            this design decision was to help the player build empathy with the refugees of the camp. In order to build 
+            this empathy, Resilience greatly relied on the refugees being able to take care of themselves and do more than 
+            go from point A to point B. They needed to: interact with each other and the player, vary their dialogue based 
+            on the state of the camp, the health of themselves and the health of their friends, have animations and an 
+            animation controller that reflected all of these conditions visually to the player. The residents had to feel 
+            like real beings that the player could relate to and empathize with. This is in contrast to most other city builders 
+            in which the NPCs are like tiny ants in the grand scheme of the city. They don’t have to be interactable or reflect 
+            any knowledge of the area or their surroundings. Most city builder NPCs just need to look like they are aware of these 
+            aspects from afar. Thus, you can see the purpose and unique challenges the  AI for the refugees in Resilience present.</p>
+
+            <p>The AI and Refactor for the Refugees in Resilience was primarily directed by Me (Chris McCole) and Tejas Shah.</p>
+
+            <p>The residents of Resilience, Murians, live together in homes, which form communities. A Murian first arrives at the 
+            camp via dropship and they check into the camp via the entrance lines. Once checked in, they are assigned a home, or 
+            declared homeless and put onto the home waiting list. Once in camp, they need to navigate to get themselves between their 
+            home, food, water, hygiene, and medical distribution facilities, all to make ure that they, and their roommates 
+            (if they have a home), are well taken care of. When a refugee is a member of a home, they know the stats of the other 
+            Murians they live with. A home can send a single refugee to gather food or water for the whole house. This functionality 
+            makes homes a more efficient way to run your camp. All of these demands led to the requirement of AI agents that were aware 
+            of themselves, the environment, the resources around them, and their roommates.</p>
+
+            <p>If we had all of these knowns, we may have been able to come up with a robust, easily extendable system from 
+            the beginning of development. However, like any large game project, this idea was built up over time, over many iterations, 
+            play tests, and prototypes. It wasn’t until well into our 9 month development time that we realized the full complexity of 
+            what we needed. And as we had been building the game, slapping in functions, behaviours, and stats wherever seemed fit, 
+            whenever we needed, we ended up with a ginormous glob of coupled classes. We had one, extremely lengthy, script to represent 
+            a refugee. This included any AI behaviour, housing info, personal stats (health, hunger, thirst, shelter, hygiene), animations,
+            UI overlays, navigational info, etc. The script was at the point where anytime we needed to update or add functionality, it 
+            took a long time to figure out where to insert the code. Once inserted, running the code had any number of crazy side effects, 
+            as the control flow was extremely hard to predict and reason about. This led to The Great Refactorization.</p>
+
+            <p>Determining how to refactor the AI was not a simple task, however, it involved a few major components that we knew we wanted. 
+            We wanted a component to reason about the refugees stats, a separate animation controller, a UI overlay manager, as well as the 
+            AI component. Everything had a pretty clean break between functionality, except for the AI component, in which we were unsure 
+            what information was needed, how to get it, and how to flow between behaviours. After some deliberation, we decided to go with 
+            a behaviour tree representation of the AI, as Halo is known for. This would allow us to cleanly separate behaviours and carefully
+            define conditional checks to modify the flow between behaviours. Best of all, if we needed a new behaviour, it was as simple 
+            as making a new class, writing the code for that behaviour in isolation, and then defining when that behaviour should trigger. 
+            All we needed was to set up the inheritance for the behaviour tree components, and structure the data that needed to be passed 
+            to the tree for it to be able to determine which behaviour to execute.</p>
+
+            <p>In building the behaviour tree we went with a classic implementation that you could find write ups of elsewhere. For the 
+            sake of completeness, I will briefly explain the structure of our behaviour tree. The behaviour tree is made up of many nodes, 
+            each of which derives from an abstract base class. In our game, this class was called Task, all other node classes would inherit 
+            from this. Those classes being Composite, Condition, and RefugeeAction. The purpose of these classes is to give structure to your 
+            graph, while relying on the polymorphic traits that you get from the inheritance.</p>
+
+            <p>The Task class allowed us to define a context of data for the class to use in it’s execution. Task also defined Enter, 
+            Execute, and Exit abstract functions, allowing all descendant classes to implement however they need. The Composite class 
+            allowed us to hold an array of Tasks, in which we could derive a Selector class and a Sequence class. Each of which looked at 
+            the array of Tasks differently, and determined how to flow between the nodes in the behaviour tree. A Selector, for example, 
+            Executes every Task in the array and stops executing, once one of the executions returns true. This allowed us to run code for 
+            one set of Tasks, effectively selecting the behaviour we wanted. Opposite to this is the Sequence class which Executes every Task 
+            until the task returns false. This allows an entire sequence to be Executed as if it were one Task, allowing us to break down large 
+            behaviours into smaller chunks. For example, we could run the Task “Check If Refugee Is Hungry” and then “Go Get Food,” so that the 
+            refugee only gets food if they are hungry. Finally, the Condition class simply returns true or false depending on if some condition 
+            is met, such as “Refugee is hungry.” Using only these base classes we developed all of the resulting refugee behaviour.</p>
+
+            <p>The image below shows our initial behaviour tree conceptualization to handle the behaviours we cared about. Later we added 
+            more behaviours and conditions, however, it was easy to do so, as we would develop the behaviour as a single node and insert it 
+            into this graph wherever needed. The behaviour tree graph runs from left to right, and stops executing when a child node returns 
+            successfully. This property allows us to set a priority of behaviours and tasks by structuring them from left to right.</p>
+        </div>
+
+        <img class="full-size" src="../images/RefugeeAI_2_26_2020.jpg" alt="Graphic of the behaviour tree representation of the refugee AI.">
+
+        <div class="post-body">
+        <p>In this graph, the simplest example is the “IsDead” action that will run when the refugee dies. This would return 
+        successfully to the root node and the tree would stop executing. To show the tasks in order of priority, I will list them 
+        here: IsDead? -> Is Player interacting with me? ->Do I (the refugee) have any immediate needs only I can take care of 
+        (Hygiene, medicine)? -> If I am in a community, do I or any of my community members need food or water? -> If all my needs,
+            and all of my roommates' needs are taken care of, go do something idle such as going home, or to the community lot, etc. 
+            This priority ordering makes it very clear when behaviours will be executed, and when.</p>
+
+        <p>As a result of this refactor, we were able to more easily add functionality to the refugee, 
+        debug unexpected behaviour, and isolate components. We were also able to run AI for a couple refugees at a 
+        time, to spread out the execution across multiple frames. This was done by taking the AI update away from every refugee, 
+        and giving it to the refugee manager. The refugee manager handled sending out AI and stat updates to each refugee it was 
+        aware of. The refugee manager also told other systems in the game, such as the score manager, of important 
+        refugee updates, such as when a refugee had died.</p>
+
+        <p>The development of the refugee AI was not done upfront, nor overnight. We decided to use a behaviour tree 
+        only after having much of the AI functionality developed. It was also after realizing that our development, and 
+        conceptualization of the code was being hindered by the code’s structure. Refactoring was not a simple task, breaking 
+        the components apart while maintaining feature parity took a long time, lots of research, and testing. The refactor 
+        alone may have taken about 20 - 40 hours of work across two weeks. Teaching the team how the system worked took time 
+        as well. However, the benefits of code readability and modifiability more than made up for this work.The refactor made 
+        improving and adding features to the game easier and more fun. We would recommend that anyone look at the complex systems 
+        in their game, to see if they could be refactored. Even if the work adds no new functionality, it can be worthwhile for the 
+        development process to improve the readability, modifiability, of these systems for you and/or your team.</p>
+        </div>
+
+         <div align="center"  style="margin:3em 0;">
+            <a href="https://static1.squarespace.com/static/5c8fe0652727be76a540eff5/t/60b7a9361094591797b296c9/1622649142304/5_19_2021_Resume.pdf" target="_blank"><div class="rectangle">
+                <p class="white">Resume</p>
+            </div></a>
+            <a href="mailto: chrismccole1@gmail.com" target="_blank"><div class="rectangle">
+                <p class="white">Get In Touch</p>
+            </div></a>
+            <a href="https://www.patreon.com/mccool_kids" target="_blank"><div class="rectangle">
+                <p class="white">Join My Patreon</p>
+            </div></a>
+        </div>
+        
+        <div align="center" style="margin:3em 0;">
+            <a class="none-link" href="https://www.patreon.com/mccool_kids" target="_blank">
+                <img src="../images/patreon.png" class="social">
+            </a>
+            <a class="none-link" href="https://twitter.com/_Sr_Real" target="_blank">
+                <img src="../images/twitter.png" class="social">
+            </a>
+            <a class="none-link" href="https://surrealgaming.itch.io/" target="_blank">
+                <img src="../images/itch.png" class="social">
+            </a>
+            <a class="none-link" href="https://github.com/cjm399" target="_blank">
+                <img src="../images/github.png" class="social">
+            </a>
+            <a class="none-link" href="https://www.youtube.com/channel/UCXebYIzImGv9r-pqPG2drAQ?view_as=subscriber" target="_blank">
+                <img src="../images/youtube.png" class="social">
+            </a>
+        </div>
+    </body>
+</html>
